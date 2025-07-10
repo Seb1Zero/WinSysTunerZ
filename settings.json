@@ -1,0 +1,18 @@
+{
+  "SelectedTheme": "Dark",
+  "SelectedLanguage": "de",
+  "Themes": [
+    {
+      "Display": "Light",
+      "Value": "Light"
+    },
+    {
+      "Display": "Dark",
+      "Value": "Dark"
+    },
+    {
+      "Display": "OLED",
+      "Value": "OLED"
+    }
+  ]
+}

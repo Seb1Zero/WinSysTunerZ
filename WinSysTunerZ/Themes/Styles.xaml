@@ -1,0 +1,160 @@
+<!-- Themes/Styles.xaml -->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="clr-namespace:WinSysTunerZ.Models">
+
+    <!-- 🔹 RoundedButtonStyle -->
+    <Style x:Key="RoundedButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource ButtonBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}" />
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="8"
+                        SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ButtonPressedBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RoundedComboBoxStyle: Inhalt mittig, Pfeil rechts, themefähig -->
+    <Style x:Key="RoundedComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="Background" Value="{DynamicResource SidebarBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}" />
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="110"/>
+        <Setter Property="MaxWidth" Value="200"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="8"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource ButtonBrush}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="36"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="36"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Fake linke Spalte (leer) für optische Mitte -->
+                                <ContentPresenter
+                                Grid.Column="1"
+                                Margin="0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                RecognizesAccessKey="True"/>
+                                <!-- Dropdown-Pfeil rechts -->
+                                <ToggleButton
+                                x:Name="DropDownToggle"
+                                Grid.Column="2"
+                                Focusable="False"
+                                IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                ClickMode="Press"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Width="32"
+                                Margin="0,0,4,0">
+                                    <Path Data="M 0 0 L 6 8 L 12 0 Z"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Fill="{DynamicResource ButtonForegroundBrush}"/>
+                                </ToggleButton>
+                            </Grid>
+                        </Border>
+                        <Popup
+                        x:Name="PART_Popup"
+                        Placement="Bottom"
+                        IsOpen="{TemplateBinding IsDropDownOpen}"
+                        AllowsTransparency="True"
+                        Focusable="False"
+                        PopupAnimation="Slide">
+                            <Border
+                            Background="{DynamicResource SidebarBrush}"
+                            BorderBrush="{DynamicResource ButtonBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            MinWidth="{Binding ActualWidth, ElementName=Border}">
+                                <ScrollViewer>
+                                    <StackPanel IsItemsHost="True"
+                                            KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 🔹 RegistryItemTemplate -->
+    <DataTemplate x:Key="RegistryItemTemplate"
+                  DataType="{x:Type models:RegistrySetting}">
+        <Border Padding="10" Margin="0,0,0,10" CornerRadius="8"
+                Background="{DynamicResource SidebarBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource ButtonForegroundBrush}"/>
+                    <TextBlock Text="{Binding Description}" FontStyle="Italic" FontSize="12" Foreground="LightGray"/>
+                </StackPanel>
+                <TextBlock Text="{Binding CurrentValue}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource ButtonForegroundBrush}"/>
+                <Button Content=" Apply " Grid.Column="2" Margin="5,0"
+                        Style="{StaticResource RoundedButtonStyle}"
+                        Command="{Binding DataContext.ApplyCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                        CommandParameter="{Binding}"/>
+                <Button Content=" Reset " Grid.Column="3" Margin="5,0,0,0"
+                        Style="{StaticResource RoundedButtonStyle}"
+                        Command="{Binding DataContext.ResetCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                        CommandParameter="{Binding}"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+</ResourceDictionary>

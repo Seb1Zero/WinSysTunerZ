@@ -1,0 +1,31 @@
+﻿<Window x:Class="WinSysTunerZ.ColorPickerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Custom Theme erstellen"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="ToolWindow">
+    <StackPanel Margin="18" MinWidth="340">
+        <TextBlock Text="Theme Name:" Margin="0,0,0,6"/>
+        <TextBox x:Name="ThemeNameBox" Margin="0,0,0,18"/>
+
+        <TextBlock Text="Primärfarbe:" Margin="0,0,0,2"/>
+        <xctk:ColorPicker x:Name="PrimaryColorPicker" 
+                          Width="180"
+                          Margin="0,0,0,12"
+                          SelectedColorChanged="PrimaryColorPicker_SelectedColorChanged"/>
+
+        <TextBlock Text="Sekundärfarbe:" Margin="0,0,0,2"/>
+        <xctk:ColorPicker x:Name="SecondaryColorPicker" 
+                          Width="180"
+                          Margin="0,0,0,12"
+                          SelectedColorChanged="SecondaryColorPicker_SelectedColorChanged"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="OK" Width="90" Margin="0,0,6,0" IsDefault="True" Click="OK_Click"/>
+            <Button Content="Abbrechen" Width="90" Click="Cancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

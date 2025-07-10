@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysTunerZ", "WinSysTunerZ\WinSysTunerZ.csproj", "{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Debug|x64.ActiveCfg = Debug|x64
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Debug|x64.Build.0 = Debug|x64
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Release|x64.ActiveCfg = Release|x64
+		{8194F1B3-6A8B-4449-8EA8-FD120094DCC1}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30AF5E6C-1D05-4343-8E15-CDCBAF918BF7}
+	EndGlobalSection
+EndGlobal

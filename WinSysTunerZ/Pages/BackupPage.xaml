@@ -1,0 +1,49 @@
+<Page x:Class="WinSysTunerZ.BackupPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="BackupPage">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Ueberschrift -->
+            <RowDefinition Height="Auto"/>
+            <!-- Create-Button -->
+            <RowDefinition Height="*"/>
+            <!-- Liste -->
+            <RowDefinition Height="Auto"/>
+            <!-- Delete-Button -->
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Registry Backups"
+                   Grid.Row="0"
+                   FontWeight="Bold"
+                   Foreground="Blue"
+                   FontSize="18"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <!-- Create Backup -->
+        <Button Content="Create Backup"
+                Grid.Row="1"
+                Click="CreateBackup_Click"
+                Style="{StaticResource RoundedButtonStyle}"
+                HorizontalAlignment="Stretch"
+                Margin="0,5,0,0"/>
+
+        <!-- Backup-Liste -->
+        <ListBox x:Name="BackupList"
+                 Grid.Row="2"
+                 Height="200"
+                 HorizontalAlignment="Stretch"
+                 Margin="0,10,0,0"/>
+
+        <!-- Delete Selected Backup -->
+        <Button Content="Delete Selected Backup"
+                Grid.Row="3"
+                Click="DeleteBackup_Click"
+                Style="{StaticResource RoundedButtonStyle}"
+                HorizontalAlignment="Stretch"
+                Margin="0,10,0,0"/>
+    </Grid>
+</Page>

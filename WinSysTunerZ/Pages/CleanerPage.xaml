@@ -1,0 +1,62 @@
+<Page x:Class="WinSysTunerZ.CleanerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Cleaner">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Cleaning Options"
+                   Grid.Row="0"
+                   FontWeight="Bold"
+                   Foreground="Blue"
+                   FontSize="18"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top">
+            <Button Content="Clean Temporary Files"
+                    Click="CleanTemp_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5,0,0"/>
+
+            <Button Content="Clean Prefetch"
+                    Click="CleanPrefetch_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5,0,0"/>
+
+            <Button Content="Clean Windows Update Cache"
+                    Click="CleanWUCache_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5,0,0"/>
+
+            <Button Content="Empty Recycle Bin"
+                    Click="EmptyRecycleBin_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5,0,0"/>
+
+            <Button Content="Run Disk Cleanup"
+                    Click="RunDiskCleanup_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5,0,0"/>
+
+            <Button Content="Clean Registry Empty Keys"
+                    Click="CleanRegistryKeys_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5,0,0"/>
+        </StackPanel>
+    </Grid>
+</Page>

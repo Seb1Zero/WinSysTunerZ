@@ -1,0 +1,66 @@
+<Page x:Class="WinSysTunerZ.CmdToolsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="CMD Tools">
+
+    <!-- Wir nutzen ein Grid statt Center-StackPanel, damit wir den Inhalt
+         automatisch ueber die volle Breite ziehen koennen. -->
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Ueberschrift -->
+            <RowDefinition Height="Auto"/>
+            <!-- Buttons -->
+            <RowDefinition Height="*"/>
+            <!-- OutputBox -->
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="CMD Tools"
+                   FontWeight="Bold"
+                   Foreground="Blue"
+                   FontSize="18"
+                   Margin="0,0,0,10"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"/>
+
+        <!-- Button-Gruppe -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Margin="0,0,0,10">
+            <!-- Alle Buttons strecken sich horizontal -->
+            <Button Content="Run System File Checker (SFC)"
+                    Click="RunSFC_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5"/>
+
+            <Button Content="Deployment Image Servicing and Management (DISM) Online"
+                    Click="RunDISM_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5"/>
+
+            <Button Content="IP Configuration"
+                    Click="RunIPConfig_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5"/>
+
+            <Button Content="Ping google.com"
+                    Click="RunPing_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,5"/>
+        </StackPanel>
+
+        <!-- Output-TextBox -->
+        <TextBox x:Name="OutputBox"
+                 Grid.Row="2"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalAlignment="Stretch"
+                 MinHeight="200"/>
+    </Grid>
+</Page>
