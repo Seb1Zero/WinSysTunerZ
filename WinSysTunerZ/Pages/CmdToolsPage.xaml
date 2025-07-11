@@ -59,7 +59,9 @@
         <TextBox x:Name="OutputBox"
                  Grid.Row="2"
                  TextWrapping="Wrap"
+                 IsReadOnly="True"
                  VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"
                  HorizontalAlignment="Stretch"
                  MinHeight="200"/>
     </Grid>

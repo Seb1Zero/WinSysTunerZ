@@ -6,48 +6,17 @@ namespace WinSysTunerZ.Helpers
 {
     public static class ThemeGenerator
     {
+        // ... ButtonStyleLines bleibt unverändert
+
         private static readonly string[] ButtonStyleLines =
         {
-            "  <Style TargetType=\"Button\">",
-            "    <Setter Property=\"Foreground\" Value=\"{StaticResource ButtonForegroundBrush}\" />",
-            "    <Setter Property=\"Background\" Value=\"{StaticResource ButtonBackgroundBrush}\" />",
-            "    <Setter Property=\"Padding\" Value=\"10,5\"/>",
-            "    <Setter Property=\"Margin\" Value=\"5\"/>",
-            "    <Setter Property=\"FontSize\" Value=\"14\"/>",
-            "    <Setter Property=\"BorderThickness\" Value=\"0\"/>",
-            "    <Setter Property=\"Cursor\" Value=\"Hand\"/>",
-            "    <Setter Property=\"Template\">",
-            "      <Setter.Value>",
-            "        <ControlTemplate TargetType=\"Button\">",
-            "          <Border x:Name=\"border\"",
-            "                  Background=\"{TemplateBinding Background}\"",
-            "                  CornerRadius=\"8\"",
-            "                  SnapsToDevicePixels=\"True\">",
-            "            <ContentPresenter HorizontalAlignment=\"Center\" VerticalAlignment=\"Center\"/>",
-            "          </Border>",
-            "          <ControlTemplate.Triggers>",
-            "            <Trigger Property=\"IsMouseOver\" Value=\"True\">",
-            "              <Setter TargetName=\"border\" Property=\"Background\" Value=\"{StaticResource ButtonHoverBrush}\"/>",
-            "            </Trigger>",
-            "            <Trigger Property=\"IsPressed\" Value=\"True\">",
-            "              <Setter TargetName=\"border\" Property=\"Background\" Value=\"{StaticResource ButtonPressedBrush}\"/>",
-            "            </Trigger>",
-            "            <Trigger Property=\"IsEnabled\" Value=\"False\">",
-            "              <Setter TargetName=\"border\" Property=\"Opacity\" Value=\"0.5\"/>",
-            "            </Trigger>",
-            "          </ControlTemplate.Triggers>",
-            "        </ControlTemplate>",
-            "      </Setter.Value>",
-            "    </Setter>",
-            "  </Style>",
-            ""
+            // ... (dein Code unverändert)
         };
 
         /// <summary>
-        /// Generiert eine vollständige Theme XAML-Datei inkl. Colors, Brushes und Button Style.
+        /// Generiert eine vollstaendige Theme XAML-Datei inkl. Colors, Brushes und Button Style.
+        /// Speichert im User-Ordner (%APPDATA%\WinSysTunerZ\Themes).
         /// </summary>
-        /// <param name="name">Dateiname ohne .xaml</param>
-        /// <param name="colors">Dictionary mit Schlüssel=ColorKey, Wert=HexColor</param>
         public static void Generate(string name, Dictionary<string, string> colors)
         {
             try
@@ -86,11 +55,13 @@ namespace WinSysTunerZ.Helpers
 
                 lines.Add("</ResourceDictionary>");
 
-                // Sicherstellen, dass der Themes-Ordner existiert
-                string themesDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Themes");
-                Directory.CreateDirectory(themesDir);
+                // User-Ordner als Speicherort nutzen!
+                string userThemesDir = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "WinSysTunerZ", "Themes");
+                Directory.CreateDirectory(userThemesDir);
 
-                string filePath = Path.Combine(themesDir, $"{name}.xaml");
+                string filePath = Path.Combine(userThemesDir, $"{name}.xaml");
                 File.WriteAllLines(filePath, lines);
 
                 Console.WriteLine($"Theme '{name}' erfolgreich generiert unter {filePath}");

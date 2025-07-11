@@ -1,64 +1,92 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>AnyCPU;x64</Platforms>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <SignAssembly>False</SignAssembly>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Platforms>AnyCPU;x64</Platforms>
+		<SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<SignAssembly>False</SignAssembly>
+		<PlatformTarget>AnyCPU</PlatformTarget>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>$(DefineConstants);RELEASE;NET8_0</DefineConstants>
-  </PropertyGroup>
+		<!--Selbst erstellt-->
+		<Version>0.1.1</Version>
+		<FileVersion>$(Version).0</FileVersion>
+		<AssemblyVersion>$(Version).0</AssemblyVersion>
+		<Authors>Seb1Zero</Authors>
+		<Company>Seb1Zero</Company>
+		<Description>WinSysTunerZ – Windows System Tuner by Seb1Zero</Description>
+		<Product>WinSysTunerZ</Product>
+		<PackageReleaseNotes>Erweiterung der Funktionalität, Performance Optimierungen und BugFixes</PackageReleaseNotes>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DefineConstants>$(DefineConstants);RELEASE;NET8_0</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn>1701;1702;1591;NU1701</NoWarn>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
-    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
-    <PackageReference Include="System.Management" Version="9.0.7" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<NoWarn>1701;1702;1591;NU1701</NoWarn>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Update="Helpers\ResourceProvider.cs">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourceProvider.Designer.cs</LastGenOutput>
-    </Compile>
-    <Compile Update="Models\RegistrySetting.cs">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702;1591;NU1701</NoWarn>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<NoWarn>1701;1702;1591;NU1701</NoWarn>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
+		<PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+		<PackageReference Include="System.Management" Version="9.0.7" />
+		<PackageReference Include="Velopack" Version="0.0.1298" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Helpers\ResourceProvider.cs">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResourceProvider.Designer.cs</LastGenOutput>
+		</Compile>
+		<Compile Update="Models\RegistrySetting.cs">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\Resource.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resource.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Resource.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resource.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;D:\000_Projekte\Windows_System_Tuner\BuildWinSysTunerZWithVelopack.ps1&quot;&#xA;" />
+	</Target>
 
 </Project>

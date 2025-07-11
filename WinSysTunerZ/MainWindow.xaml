@@ -1,13 +1,8 @@
 ﻿<Window x:Class="WinSysTunerZ.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:helpers="clr-namespace:WinSysTunerZ.Helpers"
-        Title="{Binding [AppTitle]}"
+        Title="WinSysTunerZ"
         Height="600" Width="1000">
-
-    <Window.DataContext>
-        <Binding Source="{x:Static helpers:ResourceProvider.Instance}"/>
-    </Window.DataContext>
 
     <Border Background="{DynamicResource BackgroundBrush}" BorderThickness="0">
         <Grid>
@@ -18,13 +13,41 @@
 
             <!-- TopBar -->
             <Border Grid.Row="0" Background="{DynamicResource SidebarBrush}">
-                <DockPanel>
-                    <TextBlock Text="{Binding [AppTitle]}"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               Foreground="White"
-                               FontWeight="Bold"/>
-                </DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Version -->
+                        <ColumnDefinition Width="*"/>
+                        <!-- App Title -->
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Author -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Version links -->
+                    <TextBlock Grid.Column="0"
+                        Text="{Binding AppVersion}"
+                        VerticalAlignment="Center"
+                        Margin="10,0,20,0"
+                        Foreground="White"
+                        FontWeight="Bold"/>
+
+                    <!-- Titel zentriert -->
+                    <TextBlock Grid.Column="1"
+                        Text="{Binding AppTitle}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Foreground="White"
+                        FontWeight="Bold"/>
+
+                    <!-- Autor rechts -->
+                    <TextBlock Grid.Column="2"
+                        Text="{Binding AppAuthor}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="20,0,10,0"
+                        Foreground="White"
+                        FontWeight="Bold"/>
+                </Grid>
             </Border>
 
             <!-- Main Content Area -->
@@ -37,29 +60,18 @@
                 <!-- Sidebar -->
                 <Border Grid.Column="0" Background="{DynamicResource SidebarBrush}">
                     <StackPanel>
-                        <Button Style="{StaticResource RoundedButtonStyle}"
-                                Content="{Binding [Registry]}"
-                                Click="Nav_Registry"/>
-                        <Button Style="{StaticResource RoundedButtonStyle}"
-                                Content="{Binding [CmdTools]}"
-                                Click="Nav_Cmd"/>
-                        <Button Style="{StaticResource RoundedButtonStyle}"
-                                Content="{Binding [Cleaner]}"
-                                Click="Nav_Cleaner"/>
-                        <Button Style="{StaticResource RoundedButtonStyle}"
-                                Content="{Binding [Backup]}"
-                                Click="Nav_Backup"/>
-                        <Button Style="{StaticResource RoundedButtonStyle}"
-                                Content="{Binding [Hardware]}"
-                                Click="Nav_Hardware"/>
-                        <Button Style="{StaticResource RoundedButtonStyle}"
-                                Content="{Binding [Settings]}"
-                                Click="Nav_Settings"/>
+                        <!-- Buttons, bei Bedarf die Command-Logik nachziehen -->
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Registry" Click="Nav_Registry"/>
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="CMD/PowerShell" Click="Nav_Cmd"/>
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Cleaner" Click="Nav_Cleaner"/>
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Backup" Click="Nav_Backup"/>
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Hardware" Click="Nav_Hardware"/>
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Settings" Click="Nav_Settings"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Pages -->
-                <Frame x:Name="MainFrame" Grid.Column="1"/>
+                <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
             </Grid>
         </Grid>
     </Border>

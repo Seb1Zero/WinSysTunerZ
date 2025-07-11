@@ -38,20 +38,6 @@
                    Margin="0,0,0,18"
                    Width="108"/>
 
-        <!-- Buttons: Update & Theme Generator -->
-        <StackPanel
-            Orientation="Vertical"
-            HorizontalAlignment="Center"
-            Width="250"
-            Margin="0,55,0,0"
-            Grid.RowSpan="2">
-            <Button Content="Check for Updates"
-                    Click="CheckUpdate_Click"
-                    Style="{StaticResource RoundedButtonStyle}"
-                    Margin="0,0,0,8"
-                    HorizontalAlignment="Stretch"/>
-        </StackPanel>
-
         <!-- Sprache Auswahl -->
         <StackPanel Grid.Row="2"
                     Orientation="Vertical"

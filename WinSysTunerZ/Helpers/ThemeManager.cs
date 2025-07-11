@@ -1,4 +1,5 @@
-using System;
+ï»¿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -7,7 +8,7 @@ namespace WinSysTunerZ.Helpers
     public static class ThemeManager
     {
         /// <summary>
-        /// Lädt das aktuelle Theme und stellt sicher, dass Styles.xaml immer eingebunden ist.
+        /// Laedt das aktuelle Theme â€“ bevorzugt aus dem User-Profil, sonst aus App-Verzeichnis.
         /// </summary>
         public static void Load()
         {
@@ -18,22 +19,35 @@ namespace WinSysTunerZ.Helpers
                     theme = "Dark"; // Fallback Default
 
                 var stylesUri = new Uri("Themes/Styles.xaml", UriKind.Relative);
-                var themeUri = new Uri($"Themes/{theme}.xaml", UriKind.Relative);
+
+                // User-Ordner fuer Custom Themes
+                string userThemePath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "WinSysTunerZ", "Themes", theme + ".xaml");
+
+                ResourceDictionary themeDict;
+                if (File.Exists(userThemePath))
+                {
+                    // Aus User-Ordner laden (Dateipfad â†’ Absolute URI)
+                    themeDict = new ResourceDictionary() { Source = new Uri(userThemePath, UriKind.Absolute) };
+                }
+                else
+                {
+                    // Aus dem Installationsverzeichnis (Themes-Ordner im Output)
+                    themeDict = new ResourceDictionary() { Source = new Uri($"Themes/{theme}.xaml", UriKind.Relative) };
+                }
 
                 var dicts = Application.Current.Resources.MergedDictionaries;
-
-                // Extrahiere Styles.xaml falls bereits vorhanden
                 var stylesDict = dicts.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Styles.xaml"));
                 dicts.Clear();
 
-                // Styles.xaml immer zuerst hinzufügen
+                // Styles.xaml immer zuerst einbinden
                 if (stylesDict == null)
                     dicts.Add(new ResourceDictionary() { Source = stylesUri });
                 else
                     dicts.Add(stylesDict);
 
-                // Theme hinzufügen
-                dicts.Add(new ResourceDictionary() { Source = themeUri });
+                dicts.Add(themeDict);
             }
             catch (Exception ex)
             {

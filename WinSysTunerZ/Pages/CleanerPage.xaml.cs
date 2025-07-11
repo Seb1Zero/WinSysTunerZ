@@ -4,11 +4,11 @@ namespace WinSysTunerZ {
         public CleanerPage() {
             InitializeComponent();
         }
-        private void CleanTemp_Click(object s, System.Windows.RoutedEventArgs e) => Helpers.CleanerHelper.CleanTemp();
-        private void CleanPrefetch_Click(object s, System.Windows.RoutedEventArgs e) => Helpers.CleanerHelper.CleanPrefetch();
-        private void CleanWUCache_Click(object s, System.Windows.RoutedEventArgs e) => Helpers.CleanerHelper.CleanWindowsUpdateCache();
-        private void EmptyRecycleBin_Click(object s, System.Windows.RoutedEventArgs e) => Helpers.CleanerHelper.EmptyRecycleBin();
-        private void RunDiskCleanup_Click(object s, System.Windows.RoutedEventArgs e) => Helpers.CleanerHelper.RunDiskCleanup();
-        private void CleanRegistryKeys_Click(object s, System.Windows.RoutedEventArgs e) => Helpers.CleanerHelper.CleanRegistryEmptyKeys();
+        private async void CleanTemp_Click(object s, System.Windows.RoutedEventArgs e) => await Helpers.CleanerHelper.CleanTempAsync(OutputBox);
+        private async void CleanPrefetch_Click(object s, System.Windows.RoutedEventArgs e) => await Helpers.CleanerHelper.CleanPrefetchAsync(OutputBox);
+        private async void CleanWUCache_Click(object s, System.Windows.RoutedEventArgs e) => await Helpers.CleanerHelper.CleanWindowsUpdateCacheAsync(OutputBox);
+        private async void EmptyRecycleBin_Click(object s, System.Windows.RoutedEventArgs e) => await Helpers.CleanerHelper.EmptyRecycleBinAsync(OutputBox);
+        private async void RunDiskCleanup_Click(object s, System.Windows.RoutedEventArgs e) => await Helpers.CleanerHelper.RunDiskCleanupAsync(OutputBox);
+        private async void CleanRegistryKeys_Click(object s, System.Windows.RoutedEventArgs e) => await Helpers.CleanerHelper.CleanRegistryEmptyKeysAsync(OutputBox);
     }
 }

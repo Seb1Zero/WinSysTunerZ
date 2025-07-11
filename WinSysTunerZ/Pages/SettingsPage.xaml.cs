@@ -12,18 +12,6 @@ namespace WinSysTunerZ
             InitializeComponent();
         }
 
-        private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await Helpers.UpdateManager.CheckForUpdate();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show($"Fehler beim Update-Check: {ex.Message}");
-            }
-        }
-
         // Theme hinzufügen
         private void AddTheme_Click(object sender, RoutedEventArgs e)
         {

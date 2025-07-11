@@ -20,24 +20,25 @@ namespace WinSysTunerZ.Helpers
 
                 var culture = new CultureInfo(lang);
 
-                // Thread-kulture setzen
+                // Thread-Kulturen setzen
                 Thread.CurrentThread.CurrentUICulture = culture;
                 Thread.CurrentThread.CurrentCulture = culture;
 
-                // Globale Default-Kultur setzen (optional, falls Threads dynamisch erzeugt werden)
+                // Globale Default-Kultur setzen
                 CultureInfo.DefaultThreadCurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
                 // Ressourcen aktualisieren
                 ResourceProvider.Instance.Refresh();
             }
-            catch (CultureNotFoundException ex)
+            catch (CultureNotFoundException)
             {
-                MessageBox.Show($"Sprache konnte nicht geladen werden: {ex.Message}", "Language Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Optional: Logging oder Fallback, aber KEINE MessageBox mehr
+                // z.B.: Debug.WriteLine($"Sprache konnte nicht geladen werden: {ex.Message}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show($"Unbekannter Fehler bei Sprache: {ex.Message}", "Language Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Optional: Logging oder Fallback, aber KEINE MessageBox mehr
             }
         }
 
@@ -52,12 +53,11 @@ namespace WinSysTunerZ.Helpers
                 Properties.Settings.Default.Save();
                 Apply();
 
-                // Benutzer informieren (optional)
-                MessageBox.Show($"Sprache gewechselt zu: {lang}", "Sprache geändert", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Keine MessageBox.Show mehr!
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show($"Fehler beim Wechseln der Sprache: {ex.Message}", "Language Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Optional: Logging, aber keine MessageBox mehr!
             }
         }
     }

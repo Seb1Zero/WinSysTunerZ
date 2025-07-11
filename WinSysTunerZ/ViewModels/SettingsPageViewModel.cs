@@ -3,13 +3,18 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Windows; // Für MessageBox
 
 namespace WinSysTunerZ.ViewModels
 {
     public class ThemeEntry
     {
-        public string Display { get; set; }
-        public string Value { get; set; }
+        public string Display { get; set; } = null!;
+        public string Value { get; set; } = null!;
+
+        public ThemeEntry() { } // Für JSON-Serialisierung!
         public ThemeEntry(string display, string value)
         {
             Display = display;
@@ -20,8 +25,10 @@ namespace WinSysTunerZ.ViewModels
 
     public class LanguageEntry
     {
-        public string Display { get; set; }
-        public string Value { get; set; }
+        public string Display { get; set; } = null!;
+        public string Value { get; set; } = null!;
+
+        public LanguageEntry() { }
         public LanguageEntry(string display, string value)
         {
             Display = display;
@@ -34,12 +41,13 @@ namespace WinSysTunerZ.ViewModels
     {
         public string? SelectedTheme { get; set; }
         public string? SelectedLanguage { get; set; }
-        public ObservableCollection<ThemeEntry> Themes { get; set; } = new();
+        public List<ThemeEntry> Themes { get; set; } = new();
     }
 
     public class SettingsPageViewModel : INotifyPropertyChanged
     {
         private const string ConfigPath = "settings.json";
+        private bool _isInitializing = true; // Flag für Initialisierung
 
         public ObservableCollection<ThemeEntry> Themes { get; set; } = new();
         public ObservableCollection<LanguageEntry> Languages { get; set; } = new()
@@ -74,24 +82,67 @@ namespace WinSysTunerZ.ViewModels
                     _selectedLanguage = value;
                     OnPropertyChanged(nameof(SelectedLanguage));
                     SaveConfig();
+
+                    // Automatischer Neustart nur bei aktiver Änderung durch den User!
+                    if (!_isInitializing)
+                    {
+                        MessageBox.Show($"Die Sprache wurde geändert. Die App wird jetzt neu gestartet.", "Sprache geändert", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // App automatisch neu starten 
+                        var exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
+                        if (!string.IsNullOrEmpty(exePath))
+                            System.Diagnostics.Process.Start(exePath);
+                        Application.Current.Shutdown();
+                    }
                 }
             }
         }
 
+        // === App-Metadaten als Properties ===
+
+        public string AppTitle => GetAppTitle();
+        public string AppVersion => GetAppVersion();
+        public string AppAuthor => GetAppAuthor();
+
+        private string GetAppTitle()
+        {
+            var attr = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyProductAttribute>();
+            return attr?.Product ?? "WinSysTunerZ";
+        }
+
+        private string GetAppVersion()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            return version != null ? $"v{version}" : "v?";
+        }
+
+        private string GetAppAuthor()
+        {
+            var attr = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCompanyAttribute>();
+            if (attr != null && !string.IsNullOrWhiteSpace(attr.Company))
+                return attr.Company;
+            var authorsAttr = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>();
+            if (authorsAttr != null && !string.IsNullOrWhiteSpace(authorsAttr.Copyright))
+                return authorsAttr.Copyright;
+            return "Unbekannt";
+        }
+
         public SettingsPageViewModel()
         {
-            LoadConfig();
-
+            // Immer zuerst Themes und Languages befüllen (damit Binding klappt)
             if (Themes.Count == 0)
             {
                 Themes.Add(new ThemeEntry("Light", "Light"));
                 Themes.Add(new ThemeEntry("Dark", "Dark"));
                 Themes.Add(new ThemeEntry("OLED", "OLED"));
             }
+            LoadConfig();
             if (SelectedTheme == null)
                 SelectedTheme = Themes.FirstOrDefault(t => t.Value == "Dark") ?? Themes.FirstOrDefault();
             if (SelectedLanguage == null)
-                SelectedLanguage = Languages.FirstOrDefault(l => l.Value == "de");
+                SelectedLanguage = Languages.FirstOrDefault(l => l.Value == "en"); // Standard jetzt auf Englisch!
+
+            _isInitializing = false; // Ab jetzt sind User-Aktionen möglich
         }
 
         public void AddTheme(string display, string value)
@@ -120,11 +171,18 @@ namespace WinSysTunerZ.ViewModels
                 {
                     var json = File.ReadAllText(ConfigPath);
                     var config = JsonSerializer.Deserialize<SettingsConfig>(json);
+
                     if (config != null)
                     {
-                        Themes = config.Themes ?? new ObservableCollection<ThemeEntry>();
-                        _selectedTheme = Themes.FirstOrDefault(t => t.Value == config.SelectedTheme) ?? Themes.FirstOrDefault();
-                        _selectedLanguage = Languages.FirstOrDefault(l => l.Value == config.SelectedLanguage) ?? Languages.FirstOrDefault();
+                        Themes.Clear();
+                        foreach (var t in config.Themes ?? new List<ThemeEntry>())
+                            Themes.Add(t);
+
+                        var selTheme = Themes.FirstOrDefault(t => t.Value == config.SelectedTheme);
+                        if (selTheme != null) SelectedTheme = selTheme;
+
+                        var selLang = Languages.FirstOrDefault(l => l.Value == config.SelectedLanguage);
+                        if (selLang != null) SelectedLanguage = selLang;
                     }
                 }
                 catch { /* ignore & fallback to defaults */ }
@@ -137,7 +195,7 @@ namespace WinSysTunerZ.ViewModels
             {
                 SelectedTheme = SelectedTheme?.Value,
                 SelectedLanguage = SelectedLanguage?.Value,
-                Themes = Themes
+                Themes = Themes.ToList()
             };
             try
             {
