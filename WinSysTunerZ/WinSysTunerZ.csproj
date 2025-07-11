@@ -22,6 +22,7 @@
 		<Description>WinSysTunerZ – Windows System Tuner by Seb1Zero</Description>
 		<Product>WinSysTunerZ</Product>
 		<PackageReleaseNotes>Erweiterung der Funktionalität, Performance Optimierungen und BugFixes</PackageReleaseNotes>
+		<StartupObject>WinSysTunerZ.Program</StartupObject>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
